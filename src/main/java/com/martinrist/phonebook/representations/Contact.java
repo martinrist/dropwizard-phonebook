@@ -1,10 +1,24 @@
 package com.martinrist.phonebook.representations;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.dropwizard.validation.ValidationMethod;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 public class Contact {
 
     private final int id;
+
+    @NotBlank
+    @Length(min=2, max=255)
     private final String firstName;
+
+    @NotBlank
+    @Length(min=2, max=255)
     private final String lastName;
+
+    @NotBlank
+    @Length(min=2, max=30)
     private final String phone;
 
     public Contact() {
@@ -35,5 +49,11 @@ public class Contact {
 
     public String getPhone() {
         return phone;
+    }
+
+    @JsonIgnore
+    @ValidationMethod(message = "John Doe is not a valid person")
+    public boolean isValidPerson() {
+        return !("John".equals(firstName) && "Doe".equals(lastName));
     }
 }

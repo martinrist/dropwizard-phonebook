@@ -37,7 +37,7 @@ public class App extends Application<PhonebookConfiguration>
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "mysql");
 
-        environment.jersey().register(new ContactResource(jdbi));
+        environment.jersey().register(new ContactResource(jdbi, environment.getValidator()));
     }
 
     public static void main(String[] args) throws Exception
