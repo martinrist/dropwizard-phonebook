@@ -1,0 +1,3 @@
+message: This is a message defined in the configuration file config.yaml
+messageRepetitions: 3
+additionalMessage: This overrides the default additional message
