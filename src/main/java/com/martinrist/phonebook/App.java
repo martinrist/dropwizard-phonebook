@@ -1,6 +1,7 @@
 package com.martinrist.phonebook;
 
 
+import com.martinrist.phonebook.resources.ContactResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -28,6 +29,8 @@ public class App extends Application<PhonebookConfiguration>
         }
 
         System.out.println(configuration.getAdditionalMessage());
+
+        environment.jersey().register(new ContactResource());
     }
 
     public static void main(String[] args) throws Exception
