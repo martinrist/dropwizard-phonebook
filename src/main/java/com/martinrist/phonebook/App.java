@@ -1,10 +1,13 @@
 package com.martinrist.phonebook;
 
 
+import com.martinrist.phonebook.config.PhonebookConfiguration;
 import com.martinrist.phonebook.resources.ContactResource;
 import io.dropwizard.Application;
+import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +33,11 @@ public class App extends Application<PhonebookConfiguration>
 
         System.out.println(configuration.getAdditionalMessage());
 
-        environment.jersey().register(new ContactResource());
+        // Create a DBI factory and build a JDBI instance
+        final DBIFactory factory = new DBIFactory();
+        final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "mysql");
+
+        environment.jersey().register(new ContactResource(jdbi));
     }
 
     public static void main(String[] args) throws Exception
